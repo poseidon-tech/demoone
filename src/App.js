@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 //import { useReducer } from 'react';
 //import { useRef } from 'react';
 
+
 //array destructuring
 // let [name1,name2,name3] = ["Raj","Ravi","Raghu"]
 // console.log(name1)
@@ -115,23 +116,101 @@ import { useState, useEffect } from 'react';
 // }
 
 //fetching data using usestate and useeffect - 2
-function Helper({name})
+// function Helper({name})
+// {
+//   return(
+//     <h1>Pokemon name is {name}</h1>
+//   )
+// }
+// function App()
+// {
+//   let [data,setData] = useState(null)
+//   useEffect(() => {fetch("https://pokeapi.co/api/v2/pokemon/ditto").then((response) => response.json()).then(setData)},[]) //then(setData) IS SAME AS then((data) => setData(data))
+//   if(data)
+//   return(
+//   <Helper name= {data.name}/>
+//   );
+// }
+
+//graphQL
+// let query =
+// `query
+// {
+//   allLifts
+//   {
+//     name,
+//     elevationGain,
+//     status
+//   }
+// }
+// `;
+
+// let opts = {
+//   method : "POST",
+//   headers : {"Content-Type":"application/json"},
+//   body: JSON.stringify({query})
+// }
+// function Helper({name})
+// {
+//   return(
+//     <h1>lift name is {name}</h1>
+//   )
+// }
+// function App()
+// {
+//   let[loading,setLoading] =useState(false)
+//   let[data,setData] = useState(null)
+//   let[error,setError] =  useState(false)
+//   useEffect(
+//     () => {setLoading(true); fetch(`https://snowtooth.moonhighway.com/`,opts)
+//     .then((response) => response.json())
+//     .then(setData)
+//     .then(()=>setLoading(false))
+//     .catch(setError)},[]) //then(setData) IS SAME AS then((data) => setData(data))
+//   if(loading)
+//   return <h1>loading...</h1>
+//   if(error)
+//   return <h1>{JSON.stringify(error)}</h1>
+//   if(!data) return null;
+//   return(<div>{data.data.allLifts.map((lift) =>
+//   <Helper name= {lift.name}/>)
+// }
+// </div>
+//   );
+// }
+
+//how to diplay list of objects
+let data = [{
+  name :"Prajay",
+  id : 1
+},{
+  name :"jay",
+  id : 2
+},{
+  name :"Ani",
+  id : 3
+},{
+  name :"Camp",
+  id : 4
+}]
+
+function List({data,renderEmpty,renderItem})
 {
-  return(
-    <h1>Pokemon name is {name}</h1>
-  )
+  return !data.length ?  renderEmpty : <ul>
+   {data.map((item) => <li key = {item.name}> {renderItem(item)}</li>)}
+  </ul>
 }
 function App()
-{
-  let [data,setData] = useState(null)
-  useEffect(() => {fetch("https://pokeapi.co/api/v2/pokemon/ditto").then((response) => response.json()).then(setData)},[]) //then(setData) IS SAME AS then((x) => setData(x))
+{ 
   return(
-  <Helper name= {data.name}/>
+    <>
+    <List data={data} renderEmpty={<h>List is empty</h>}
+    renderItem={(item)=><ul>{item.name} - {item.id}</ul>}
+    />
+    </>
   );
+
 }
-
-
-
 
 
 export default App;
